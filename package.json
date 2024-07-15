@@ -1,0 +1,17 @@
+{
+  "name": "online-shop",
+  "version": "1.0.0",
+  "description": "Demo application for the management and usage of an online shop",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "demo",
+    "app"
+  ],
+  "author": "David Andrei Vlad Ardelean",
+  "license": "ISC"
+  
+}
