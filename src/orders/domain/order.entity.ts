@@ -1,14 +1,15 @@
 import { Customer } from "src/customers/domain/customer.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity()
-export class Orders{
+@Entity({name:"orders"})
+export class Order{
 
     @PrimaryGeneratedColumn("uuid")
     id:string;
 
     @ManyToOne(()=> Customer)
+    @JoinColumn({name:"Customer"})
     customer:Customer;
 
     @Column({name:"CreatedAt", type:"timestamp"})

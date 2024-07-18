@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ProductCategory } from "./product-category.entity";
 
 
@@ -20,7 +20,8 @@ export class Product{
     @Column({name:"Weight", type:"double precision"})
     weight: number;
 
-    @ManyToOne(()=>ProductCategory)
+    @ManyToOne(()=>ProductCategory, {cascade:true})
+    @JoinColumn({name:"Category"})
     category: ProductCategory;
 
     @Column({name:"Supplier", type:"varchar"})

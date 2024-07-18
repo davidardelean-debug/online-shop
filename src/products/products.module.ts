@@ -4,6 +4,14 @@ import { Location } from './domain/location.entity';
 import { ProductCategory } from './domain/product-category.entity';
 import { Product } from './domain/product.entity';
 import { Stock } from './domain/stock.entity';
+import { ProductCategoryService } from './service/product-category.service';
+import { ProductCategoryRepository } from './repository/product-category.repository';
+import { ProductService } from './service/product.service';
+import { ProductRepository } from './repository/product.repository';
 
-@Module({imports:[TypeOrmModule.forFeature([Location, ProductCategory, Product, Stock])]})
+@Module({
+    imports:[TypeOrmModule.forFeature([Location, ProductCategory, Product, Stock])],
+    providers:[ProductCategoryService, ProductCategoryRepository, ProductService, ProductRepository],
+    exports:[ProductCategoryService, ProductCategoryRepository, ProductService, ProductRepository]
+})
 export class ProductsModule {}

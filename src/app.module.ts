@@ -5,8 +5,9 @@ import { ProductsModule } from './products/products.module';
 import { CustomersModule } from './customers/customers.module';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Customer } from "./customers/domain/customer.entity";
-import { Orders } from "./orders/domain/order.entity";
+import { CustomersController } from "./customers/controller/customers.controller";
+import { ProductCategoryController } from "./products/controller/product-category.controller";
+import { ProductController } from "./products/controller/product.controller";
 
 
 @Module({
@@ -23,6 +24,6 @@ import { Orders } from "./orders/domain/order.entity";
       synchronize: true
     })
   ],
-  controllers: [HealthController],
+  controllers: [HealthController, CustomersController, ProductCategoryController, ProductController],
 })
 export class AppModule {}
