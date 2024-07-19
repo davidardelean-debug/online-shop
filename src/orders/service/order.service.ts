@@ -19,8 +19,7 @@ export class OrderService{
     ){}
 
     async getAll(): Promise<Order[]>{
-        const order = await this.orderRepository.getAll();
-        return order;
+        return await this.orderRepository.getAll();
     }
 
     async getById(id: UUID): Promise<Order>{
@@ -44,7 +43,18 @@ export class OrderService{
         return newOrder;
     }
 
-    async remove(id: UUID): Promise<DeleteResult>{
+    async update(order: Order): Promise<Order>{
+        return await this.orderRepository.add(order);
+    }
+
+    async remove(id: string): Promise<DeleteResult>{
+
+        const queryBuilder = await this.orderDetailService.getAll(id);
+        const orderDetailsIds = (await queryBuilder.getMany()).map(oD=> oD.id)
+        console.log("ORDER DETAILS IDS:", orderDetailsIds)
+        await this.orderDetailService.removeAll(orderDetailsIds);
+
+
         return await this.orderRepository.remove(id);
     }
 

@@ -10,15 +10,15 @@ export class OrderDetail{
     @PrimaryGeneratedColumn("uuid")
     id:string;
 
-    @ManyToOne(()=>Order)
-    @JoinColumn({name:"Order"})
+    @ManyToOne(()=>Order, {eager:true})
+    @JoinColumn({name:"OrderId"})
     order:Order;
 
-    @ManyToOne(()=>Product)
+    @ManyToOne(()=>Product, {eager:true})
     @JoinColumn({name:"Product"})
     product: Product;
 
-    @ManyToOne(()=>Location)
+    @ManyToOne(()=>Location, {eager:true})
     @JoinColumn({name:"ShippedFrom"})
     location: Location;
 

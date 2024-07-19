@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { OrderDetail } from "../domain/order-detail.entity";
-import { Repository } from "typeorm";
+import { Repository, SelectQueryBuilder } from "typeorm";
 import { UUID } from "crypto";
 
 
@@ -13,8 +13,12 @@ export class OrderDetailRepository{
         private orderDetailRepository: Repository<OrderDetail>
     ){}
 
-    async getAll(): Promise<OrderDetail[]>{
-        return await this.orderDetailRepository.find();
+    getAll(orderId: string): SelectQueryBuilder<OrderDetail>{
+        const queryBuilder = this.orderDetailRepository.createQueryBuilder("order_detail")
+        .leftJoinAndSelect("order_detail.order", "order")
+        .where("order.id = :orderId", { orderId })
+
+        return queryBuilder;
     }
 
     async getById(id: UUID): Promise<OrderDetail>{
@@ -27,5 +31,9 @@ export class OrderDetailRepository{
 
     async remove(id:UUID){
         return await this.orderDetailRepository.delete(id);
+    }
+
+    async removeAll(ids: string[]){
+        return await this.orderDetailRepository.delete(ids);
     }
 }

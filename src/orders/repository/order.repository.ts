@@ -24,7 +24,7 @@ export class OrderRepository{
         return await this.ordersRepository.save(order);
     }
 
-    async remove(id:UUID){
+    async remove(id:string){
         return await this.ordersRepository.delete(id);
     }
 }

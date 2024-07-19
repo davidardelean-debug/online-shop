@@ -23,11 +23,7 @@ export class StockService{
     }
 
     async update(updatedStock: Stock[]){
-        console.log("UPDATED STOCK:", updatedStock)
         return await this.stockRepository.add(updatedStock);
     }
 
-    // async add(order:Order) : Promise<Order>{
-    //     return await this.stockRepository.save(order);
-    // }
 }
