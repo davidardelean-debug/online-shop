@@ -4,7 +4,6 @@ import { ProductCategoryDto } from "../dto/product-category.dto";
 export class ProductCategoryMapper{
 
     static toDto(productCategory: ProductCategory){
-        console.log("PROD CAT:", productCategory);
         const {id, name, description} = productCategory;
         return {id, name, description};
     }

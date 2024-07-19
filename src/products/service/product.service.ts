@@ -11,7 +11,6 @@ export class ProductService{
 
     async getAll(): Promise<Product[]>{
         const products =await this.productRepository.getAll();
-        console.log("PROD FROM REPO:", products)
         return products;
     }
 

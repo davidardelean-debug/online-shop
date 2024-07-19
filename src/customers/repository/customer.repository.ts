@@ -17,4 +17,8 @@ export class CustomerRepository{
         const customer = await this.customersRepository.findOneBy({id});
         return customer;
       } 
+
+      async add(customer: Customer): Promise<Customer>{
+        return await this.customersRepository.save(customer);
+      }
 }

@@ -8,7 +8,7 @@ export class Order{
     @PrimaryGeneratedColumn("uuid")
     id:string;
 
-    @ManyToOne(()=> Customer)
+    @ManyToOne(()=> Customer, {eager:true})
     @JoinColumn({name:"Customer"})
     customer:Customer;
 

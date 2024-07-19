@@ -13,7 +13,6 @@ export class ProductController{
     @Get()
     async getAll(): Promise<ProductDto[]>{
         const products = await this.productService.getAll();
-        console.log("PROD:", products)
         return products.map(p=> ProductMapper.toDto(p));
     }
 

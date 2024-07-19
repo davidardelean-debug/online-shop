@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CustomersController } from "./customers/controller/customers.controller";
 import { ProductCategoryController } from "./products/controller/product-category.controller";
 import { ProductController } from "./products/controller/product.controller";
+import { OrdersController } from "./orders/controller/orders.controller";
 
 
 @Module({
@@ -24,6 +25,6 @@ import { ProductController } from "./products/controller/product.controller";
       synchronize: true
     })
   ],
-  controllers: [HealthController, CustomersController, ProductCategoryController, ProductController],
+  controllers: [HealthController, CustomersController, ProductCategoryController, ProductController, OrdersController],
 })
 export class AppModule {}

@@ -20,7 +20,7 @@ export class Product{
     @Column({name:"Weight", type:"double precision"})
     weight: number;
 
-    @ManyToOne(()=>ProductCategory, {cascade:true})
+    @ManyToOne(()=>ProductCategory, {eager:true})
     @JoinColumn({name:"Category"})
     category: ProductCategory;
 
