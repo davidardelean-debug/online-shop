@@ -5,7 +5,6 @@ import { OrderDto } from "../dto/order.dto";
 import { OrderMapper } from "../mapper/order.mapper";
 import { CreateOrderDto } from "../dto/create-order.dto";
 import { LocationMapper } from "src/products/mapper/location.mapper";
-import { Order } from "../domain/order.entity";
 
 @Controller('orders')
 export class OrdersController{
