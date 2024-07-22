@@ -1,24 +1,22 @@
-import { IsInstance, IsInt, IsString, Min } from "class-validator";
-import { LocationDto } from "./location.dto";
-import { ProductDto } from "./product.dto";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInstance, IsInt, IsString } from 'class-validator';
+import { LocationDto } from './location.dto';
+import { ProductDto } from './product.dto';
 
+export class StockDto {
+  @IsString()
+  @ApiProperty({ type: String, description: 'Id' })
+  id: string;
 
-export class StockDto{
+  @IsInstance(ProductDto)
+  @ApiProperty({ type: ProductDto, description: 'Product' })
+  product: ProductDto;
 
-    @IsString()
-    @ApiProperty({type:String, description:"Id"})
-    id: string;
+  @IsInstance(LocationDto)
+  @ApiProperty({ type: LocationDto, description: 'Location' })
+  location: LocationDto;
 
-    @IsInstance(ProductDto)
-    @ApiProperty({type:ProductDto, description:"Product"})
-    product: ProductDto;
-
-    @IsInstance(LocationDto)
-    @ApiProperty({type:LocationDto, description:"Location"})
-    location: LocationDto;
-
-    @IsInt()
-    @ApiProperty({type:Number, description:"Quantity"})
-    quantity: number;
+  @IsInt()
+  @ApiProperty({ type: Number, description: 'Quantity' })
+  quantity: number;
 }

@@ -1,29 +1,39 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CustomersModule } from './customers/customers.module';
+import { HealthController } from './health.controller';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
-import { CustomersModule } from './customers/customers.module';
 import { SharedModule } from './shared/shared.module';
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { CustomersController } from "./customers/controller/customers.controller";
-import { ProductCategoryController } from "./products/controller/product-category.controller";
-import { ProductController } from "./products/controller/product.controller";
-import { OrdersController } from "./orders/controller/orders.controller";
-
 
 @Module({
-  imports: [OrdersModule, ProductsModule, CustomersModule, SharedModule,
-    TypeOrmModule.forRoot({
-      type:"postgres",
-      host:"localhost",
-      port: 5432,
-      username: 'msgcsuser',
-      password: 'msgcspass',
-      database: 'msgcsdb',
-      entities: [],
-      autoLoadEntities:true,
-      synchronize: true
-    })
+  imports: [
+    OrdersModule,
+    ProductsModule,
+    CustomersModule,
+    SharedModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${(process.env.NODE_ENV as string) || 'dev'}`,
+      cache: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: +configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        entities: [],
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigService],
+    }),
   ],
-  controllers: [CustomersController, ProductCategoryController, ProductController, OrdersController],
+  controllers: [HealthController],
 })
 export class AppModule {}

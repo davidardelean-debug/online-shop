@@ -1,33 +1,35 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Stock } from "../domain/stock.entity";
-import { Repository } from "typeorm";
-import { UUID } from "crypto";
-
-export interface StockForOrder{
-    productId: UUID;
-    availableQuantity: number;
-}
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { OrderItemDto } from 'src/orders/dto/order-item-dto';
+import { Repository } from 'typeorm';
+import { Stock } from '../domain/stock.entity';
 
 @Injectable()
-export class StockRepository{
-    constructor(
-        @InjectRepository(Stock)
-        private stockRepository: Repository<Stock>
-    ){}
+export class StockRepository {
+  constructor(
+    @InjectRepository(Stock)
+    private stockRepository: Repository<Stock>,
+  ) {}
 
-    async get(productId: string, locationId: string): Promise<Stock>{
+  async getMany(orderItems: OrderItemDto[]): Promise<Stock[]> {
+    const queryBuilder = this.stockRepository
+      .createQueryBuilder('stock')
+      .leftJoinAndSelect('stock.product', 'product')
+      .leftJoinAndSelect('stock.location', 'location');
 
-        const queryBuilder = this.stockRepository.createQueryBuilder("stock")
-        .leftJoinAndSelect("stock.product", "product")
-        .leftJoinAndSelect("stock.location", "location")
-        .where("location.id = :locationId", { locationId })
-        .andWhere("product.id = :productId", { productId });
+    orderItems.forEach((orderItem, index) => {
+      queryBuilder.orWhere(
+        `(product.id = :productId${index} AND location.id = :locationId${index})`,
+        {
+          [`productId${index}`]: orderItem.product.id,
+          [`locationId${index}`]: orderItem.location.id,
+        },
+      );
+    });
+    return queryBuilder.getMany();
+  }
 
-        return queryBuilder.getOne();
-    }
-
-    async add(stock:Stock[]) : Promise<Stock[]>{
-        return this.stockRepository.save(stock);
-    }
+  async add(stock: Stock[]): Promise<Stock[]> {
+    return this.stockRepository.save(stock);
+  }
 }

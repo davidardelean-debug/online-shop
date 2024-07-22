@@ -1,33 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { ProductCategory } from "./product-category.entity";
-
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { ProductCategory } from './product-category.entity';
 
 @Entity()
-export class Product{
+export class Product {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id:string;
+  @Column({ name: 'Name', type: 'varchar' })
+  name: string;
 
-    @Column({name:"Name", type:"varchar"})
-    name: string;
+  @Column({ name: 'Description', type: 'varchar' })
+  description: string;
 
-    @Column({name:"Description", type:"varchar"})
-    description: string;
+  @Column({ name: 'Price', type: 'decimal' })
+  price: number;
 
-    @Column({name:"Price", type:"decimal"})
-    price:number;
+  @Column({ name: 'Weight', type: 'double precision' })
+  weight: number;
 
-    @Column({name:"Weight", type:"double precision"})
-    weight: number;
+  @ManyToOne(() => ProductCategory, { eager: true })
+  @JoinColumn({ name: 'Category' })
+  category: ProductCategory;
 
-    @ManyToOne(()=>ProductCategory, {eager:true})
-    @JoinColumn({name:"Category"})
-    category: ProductCategory;
+  @Column({ name: 'Supplier', type: 'varchar' })
+  supplier: string;
 
-    @Column({name:"Supplier", type:"varchar"})
-    supplier: string;
-
-    @Column({name:"ImageUrl", type:"varchar"})
-    imageUrl: string;
-
+  @Column({ name: 'ImageUrl', type: 'varchar' })
+  imageUrl: string;
 }

@@ -1,30 +1,34 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { OrderDetailRepository } from "../repository/order-detail.repository";
-import { OrderDetail } from "../domain/order-detail.entity";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { OrderDetail } from '../domain/order-detail.entity';
+import { OrderDetailRepository } from '../repository/order-detail.repository';
 
 @Injectable()
-export class OrderDetailService{
+export class OrderDetailService {
+  constructor(private readonly orderDetailRepository: OrderDetailRepository) {}
 
-    constructor(private readonly orderDetailRepository: OrderDetailRepository){}
-
-    async add(orderDetails: OrderDetail[]): Promise<OrderDetail[]>{
-        try {
-            return await this.orderDetailRepository.add(orderDetails);
-        } catch (error) {
-            throw new BadRequestException("Invalid input body for order detail.");
-        }
+  async add(orderDetails: OrderDetail[]): Promise<OrderDetail[]> {
+    try {
+      return this.orderDetailRepository.add(orderDetails);
+    } catch (error) {
+      throw new BadRequestException('Invalid input body for order detail.');
     }
+  }
 
-    async getAll(orderId: string){
-        try {
-            return await this.orderDetailRepository.getAll(orderId);
-        } catch (error) { 
-            throw new NotFoundException('Order details not found for order ID: ' + orderId);
-        }
+  async getAll(orderId: string) {
+    try {
+      return this.orderDetailRepository.getAll(orderId);
+    } catch (error) {
+      throw new NotFoundException(
+        'Order details not found for order ID: ' + orderId,
+      );
     }
+  }
 
-    async removeAll(orderIds: string[]){
-        return await this.orderDetailRepository.removeAll(orderIds);
-    }
-
+  async removeAll(orderIds: string[]) {
+    return this.orderDetailRepository.removeAll(orderIds);
+  }
 }

@@ -1,21 +1,18 @@
-import { Stock } from "../domain/stock.entity";
-import { StockDto } from "../dto/stock.dto";
-import { LocationMapper } from "./location.mapper";
-import { ProductMapper } from "./product.mapper";
+import { Stock } from '../domain/stock.entity';
+import { StockDto } from '../dto/stock.dto';
+import { toLocationDto, toLocationEntity } from './location.mapper';
+import { toProductDto, toProductEntity } from './product.mapper';
 
-export class StockMapper{
+export function toStockDto(stock: Stock): StockDto {
+  const product = toProductDto(stock.product);
+  const location = toLocationDto(stock.location);
 
-    static toDto(stock: Stock): StockDto{
-        const product = ProductMapper.toDto(stock.product);
-        const location = LocationMapper.toDto(stock.location);
+  return { id: stock.id, product, location, quantity: stock.quantity };
+}
 
-        return {id: stock.id, product, location, quantity: stock.quantity};
-    }
+export function toStockEntity(stockDto: StockDto): Stock {
+  const product = toProductEntity(stockDto.product);
+  const location = toLocationEntity(stockDto.location);
 
-    static toEntity(stockDto: StockDto): Stock{
-        const product = ProductMapper.toEntity(stockDto.product);
-        const location = LocationMapper.toEntity(stockDto.location);
-
-        return {id: stockDto.id, product, location, quantity: stockDto.quantity};
-    }
+  return { id: stockDto.id, product, location, quantity: stockDto.quantity };
 }

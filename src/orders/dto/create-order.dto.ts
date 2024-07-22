@@ -1,63 +1,55 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { ArrayNotEmpty, IsArray, IsInstance, IsInt, IsString, Min, MinLength, ValidateNested } from "class-validator";
-import { CustomerDto } from "src/customers/dto/customer.dto";
-import { LocationDto } from "src/products/dto/location.dto";
-import { ProductDto } from "src/products/dto/product.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsString,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
+import { CustomerDto } from 'src/customers/dto/customer.dto';
+import { LocationDto } from 'src/products/dto/location.dto';
+import { OrderItemDto } from './order-item-dto';
 
-export class OrderItem{
+export class CreateOrderDto {
+  id: string;
 
-    @IsInstance(ProductDto)
-    @ApiProperty({type:ProductDto, description:"Product"})
-    product: ProductDto;
-    
-    @IsInt()
-    @Min(1, { message: "Quantity must be at least 1" })
-    @ApiProperty({type:Number, description:"Quantity"})
-    quantity: number;
+  @Type(() => CustomerDto)
+  @ApiProperty({ type: CustomerDto, description: 'Customer' })
+  customer: CustomerDto;
 
-    @IsInstance(LocationDto)
-    @ApiProperty({type:LocationDto, description:"Product stock location"})
-    location: LocationDto;
-}
-export class CreateOrderDto{
+  createdAt?: Date;
 
-    @IsString()
-    @ApiProperty({type:String, description:"Id"})
-    id:string;
+  @IsString()
+  @MinLength(5, { message: 'Required minimum length is 5.' })
+  @ApiProperty({ type: String, description: 'Country' })
+  country: string;
 
-    @IsInstance(CustomerDto)
-    @ApiProperty({type:CustomerDto, description:"Customer"})
-    customer:CustomerDto;
+  @IsString()
+  @MinLength(5, { message: 'Required minimum length is 5.' })
+  @ApiProperty({ type: String, description: 'City' })
+  city: string;
 
-    createdAt?: Date;
+  @IsString()
+  @MinLength(5, { message: 'Required minimum length is 5.' })
+  @ApiProperty({ type: String, description: 'County' })
+  county: string;
 
-    @IsString()
-    @MinLength(5, {message: "Required minimum length is 5."})
-    @ApiProperty({type:String, description:"Country"})
-    country: string;
+  @IsString()
+  @MinLength(5, { message: 'Required minimum length is 5.' })
+  @ApiProperty({ type: String, description: 'Street' })
+  street: string;
 
-    @IsString()
-    @MinLength(5, {message: "Required minimum length is 5."})
-    @ApiProperty({type:String, description:"City"})
-    city:string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @ApiProperty({
+    type: [OrderItemDto],
+    description: 'The products of the order and their respective quantities',
+  })
+  orderItems: OrderItemDto[];
 
-    @IsString()
-    @MinLength(5, {message: "Required minimum length is 5."})
-    @ApiProperty({type:String, description:"County"})
-    county: string;
-
-    @IsString()
-    @MinLength(5, {message: "Required minimum length is 5."})
-    @ApiProperty({type:String, description:"Street"})
-    street: string;
-
-    @IsArray()
-    @ArrayNotEmpty()
-    @ValidateNested({each:true})
-    @ApiProperty({type:[OrderItem], description:"The products of the order and their respective quantities"})
-    orderItems: OrderItem[];
-
-    @IsInstance(LocationDto)
-    @ApiProperty({type:LocationDto, description:"Location"})
-    location: LocationDto;
+  @Type(() => LocationDto)
+  @ApiProperty({ type: LocationDto, description: 'Location' })
+  location: LocationDto;
 }

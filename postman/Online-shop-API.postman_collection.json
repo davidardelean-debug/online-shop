@@ -38,12 +38,12 @@
 					}
 				},
 				"url": {
-					"raw": ":{{Port}}/api/customers/new",
+					"raw": ":{{Port}}/api/customers/",
 					"port": "{{Port}}",
 					"path": [
 						"api",
 						"customers",
-						"new"
+						""
 					]
 				}
 			},
@@ -83,12 +83,12 @@
 					}
 				},
 				"url": {
-					"raw": ":{{Port}}/api/product-category/new",
+					"raw": ":{{Port}}/api/product-category/",
 					"port": "{{Port}}",
 					"path": [
 						"api",
 						"product-category",
-						"new"
+						""
 					],
 					"query": [
 						{
@@ -202,12 +202,12 @@
 					}
 				},
 				"url": {
-					"raw": ":{{Port}}/api/products/new",
+					"raw": ":{{Port}}/api/products/",
 					"port": "{{Port}}",
 					"path": [
 						"api",
 						"products",
-						"new"
+						""
 					]
 				}
 			},
@@ -271,12 +271,12 @@
 					}
 				},
 				"url": {
-					"raw": ":{{Port}}/api/orders/new",
+					"raw": ":{{Port}}/api/orders/",
 					"port": "{{Port}}",
 					"path": [
 						"api",
 						"orders",
-						"new"
+						""
 					]
 				}
 			},
