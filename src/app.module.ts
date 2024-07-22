@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { HealthController } from "./health.controller";
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { CustomersModule } from './customers/customers.module';
@@ -25,6 +24,6 @@ import { OrdersController } from "./orders/controller/orders.controller";
       synchronize: true
     })
   ],
-  controllers: [HealthController, CustomersController, ProductCategoryController, ProductController, OrdersController],
+  controllers: [CustomersController, ProductCategoryController, ProductController, OrdersController],
 })
 export class AppModule {}

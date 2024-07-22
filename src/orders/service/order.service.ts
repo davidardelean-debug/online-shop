@@ -1,11 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { UUID } from "crypto";
 import { DeleteResult } from "typeorm";
 import { OrderRepository } from "../repository/order.repository";
 import { Order } from "../domain/order.entity";
 import { OrderItem } from "../dto/create-order.dto";
 import { StockService } from "src/products/service/stock.service";
-import { Location } from "src/products/domain/location.entity";
 import { Stock } from "src/products/domain/stock.entity";
 import { OrderDetail } from "../domain/order-detail.entity";
 import { OrderDetailService } from "./order-detail.service";
@@ -13,7 +12,8 @@ import { OrderDetailService } from "./order-detail.service";
 @Injectable()
 export class OrderService{
 
-    constructor(private readonly orderRepository: OrderRepository,
+    constructor(
+        private readonly orderRepository: OrderRepository,
         private readonly orderDetailService: OrderDetailService,
         private readonly stockService: StockService
     ){}
@@ -23,20 +23,29 @@ export class OrderService{
     }
 
     async getById(id: UUID): Promise<Order>{
-        return await this.orderRepository.getById(id);
+        try {
+            return await this.orderRepository.getById(id);
+        } catch (error) {
+            throw new NotFoundException("Order not found for ID: " + id);
+        }
     }
 
-    async add(order: Order, orderItems: OrderItem[], location: Location): Promise<Order>{
-
-        const stock= await this.stockService.get(orderItems, location);
+    async add(order: Order, orderItems: OrderItem[]): Promise<Order>{
+        const stock= await this.stockService.get(orderItems);
         const {notInStock, updatedStock} = this.checkStock(orderItems, stock);
         if(notInStock.length>0)
-            throw "Some of the quantities for the products exceed the current stock."
+            throw new ForbiddenException("Some of the quantities for the products exceed the current stock.")
 
         this.stockService.update(updatedStock);
-        const newOrder = await this.orderRepository.add(order);
+        let newOrder: Order;
+        try {
+            order.createdAt = new Date();
+            newOrder = await this.orderRepository.add(order);
+        } catch (error) {
+            throw new BadRequestException("Invalid input body for order.")
+        }
         const orderDetails = orderItems.map((oI)=> {
-            return {quantity: oI.quantity, product: oI.product, location: location, order:newOrder } as OrderDetail
+            return {quantity: oI.quantity, product: oI.product, location: oI.location, order:newOrder } as OrderDetail
         })
         await this.orderDetailService.add(orderDetails);
 
@@ -44,21 +53,30 @@ export class OrderService{
     }
 
     async update(order: Order): Promise<Order>{
-        return await this.orderRepository.add(order);
+        try {
+            const existingOrder = await this.orderRepository.getById(order.id as UUID);
+            Object.assign(existingOrder, order);
+            const updatedOrder = await this.orderRepository.add(existingOrder);
+            return updatedOrder;
+        } catch (error) {
+            throw new BadRequestException("Invalid ID or input body for order.")
+        }
     }
 
     async remove(id: string): Promise<DeleteResult>{
-
+        try {
+            await this.orderRepository.getById(id as UUID)
+        } catch (error) {
+            throw new NotFoundException("Order not found for ID: " + id)
+        }
         const queryBuilder = await this.orderDetailService.getAll(id);
         const orderDetailsIds = (await queryBuilder.getMany()).map(oD=> oD.id)
-        console.log("ORDER DETAILS IDS:", orderDetailsIds)
         await this.orderDetailService.removeAll(orderDetailsIds);
-
 
         return await this.orderRepository.remove(id);
     }
 
-    checkStock(orderItems: OrderItem[], stock: Stock[]) {
+    private checkStock(orderItems: OrderItem[], stock: Stock[]) {
         const notInStock = [];
         for (const orderItem of orderItems) {
             const matchingIndex = stock.findIndex((stockItem) => orderItem.product.id === stockItem.product.id);

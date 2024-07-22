@@ -13,18 +13,18 @@ export class OrderRepository{
     ){}
 
     async getAll(): Promise<Order[]>{
-        return await this.ordersRepository.find();
+        return this.ordersRepository.find();
     }
 
     async getById(id: UUID): Promise<Order>{
-        return await this.ordersRepository.findOneBy({id});
+        return this.ordersRepository.findOneBy({id});
     }
 
     async add(order:Order) : Promise<Order>{
-        return await this.ordersRepository.save(order);
+        return this.ordersRepository.save(order);
     }
 
     async remove(id:string){
-        return await this.ordersRepository.delete(id);
+        return this.ordersRepository.delete(id);
     }
 }

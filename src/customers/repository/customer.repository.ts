@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Customer } from "../domain/customer.entity";
@@ -14,11 +14,10 @@ export class CustomerRepository{
       ) {}  
 
       async getById(id: UUID): Promise<Customer> {
-        const customer = await this.customersRepository.findOneBy({id});
-        return customer;
+        return this.customersRepository.findOneBy({id});
       } 
 
       async add(customer: Customer): Promise<Customer>{
-        return await this.customersRepository.save(customer);
+        return this.customersRepository.save(customer);
       }
 }

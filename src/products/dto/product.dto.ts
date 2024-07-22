@@ -1,30 +1,42 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ProductCategoryDto } from "./product-category.dto";
+import { IsDecimal, IsInstance, IsInt, IsPositive, IsString, IsUrl, Length } from "class-validator";
 
 export class ProductDto{
 
-    @ApiProperty({type:String, description: 'email'})
+    @IsString()
+    @ApiProperty({type:String, description: 'Id'})
     id:string;
 
-    @ApiProperty({type:String, description: 'name'})
+    @IsString()
+    @ApiProperty({type:String, description: 'Name'})
     name: string;
 
+    @IsString()
+    @Length(5, 30, {message: "Description length should be between 5 and 30 characters."})
     @ApiProperty({type:String, description: 'description'})
     description: string;
 
-    @ApiProperty({type:Number, description: 'price'})
+    @IsDecimal()
+    @ApiProperty({type:Number, description: 'Price'})
     price:number;
 
-    @ApiProperty({type:Number, description: 'weight'})
+    @IsDecimal()
+    @IsPositive()
+    @ApiProperty({type:Number, description: 'Weight'})
     weight: number;
 
-    @ApiProperty({type:ProductCategoryDto, description: 'category'})
+    @IsInstance(ProductCategoryDto)
+    @ApiProperty({type:ProductCategoryDto, description: 'Category'})
     category: ProductCategoryDto;
 
-    @ApiProperty({type:String, description: 'supplier'})
+    @IsString()
+    @ApiProperty({type:String, description: 'Supplier'})
     supplier: string;
 
-    @ApiProperty({type:String, description: 'image url'})
+    @IsString()
+    @IsUrl()
+    @ApiProperty({type:String, description: 'Image url'})
     imageUrl: string;
 
 }

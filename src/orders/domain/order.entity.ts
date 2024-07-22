@@ -13,7 +13,7 @@ export class Order{
     customer:Customer;
 
     @Column({name:"CreatedAt", type:"timestamp"})
-    createdAt: Date;
+    createdAt?: Date;
 
     @Column({name:"Address.Country", type:"varchar", length:20})
     country: string;

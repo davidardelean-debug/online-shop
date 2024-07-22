@@ -13,19 +13,19 @@ export class ProductRepository{
     ){}
 
     async getAll(): Promise<Product[]>{
-        return await this.productRepository.find();
+        return this.productRepository.find();
     }
 
     async getById(id: UUID): Promise<Product>{
-        return await this.productRepository.findOneBy({id});
+        return this.productRepository.findOneBy({id});
     }
 
     async add(product:Product) : Promise<Product>{
-        return await this.productRepository.save(product);
+        return this.productRepository.save(product);
     }
 
     async remove(id:UUID){
-        return await this.productRepository.delete(id);
+        return this.productRepository.delete(id);
     }
 
 }

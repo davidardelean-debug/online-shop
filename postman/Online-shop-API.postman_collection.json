@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "4c04d0d2-e1fc-4ac3-aee8-2933cf5c86e4",
+		"name": "Online-shop-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36992026"
+	},
+	"item": [
+		{
+			"name": "Get customer by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/customers/9c57f2be-0ae4-4ffa-91a7-76e58627af6d",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"customers",
+						"9c57f2be-0ae4-4ffa-91a7-76e58627af6d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"New\",\r\n    \"lastName\": \"Customer\",\r\n    \"username\": \"newcustomer\",\r\n    \"email\": \"new.customer@msg.group\",\r\n    \"password\": \"customerpass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/customers/new",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"customers",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/product-category",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"product-category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create category",
+			"request": {
+				"auth": {
+					"type": "basic"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"name\": \"TEST\",\r\n    \"description\": \"DESC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/product-category/new",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"product-category",
+						"new"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "test",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "desc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update category",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"description\": \"POSTMAN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/product-category/231d63ca-6989-49b3-946f-ab1b1ef73004",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"product-category",
+						"231d63ca-6989-49b3-946f-ab1b1ef73004"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/product-category/02da72d8-9453-49dc-b4eb-67db2f5ff2e8",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"product-category",
+						"02da72d8-9453-49dc-b4eb-67db2f5ff2e8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/products",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/products/041aa5c8-203c-425d-b86e-c46ec469c0c2",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"products",
+						"041aa5c8-203c-425d-b86e-c46ec469c0c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"name\": \"Hat\",\r\n    \"description\": \"Accessories\",\r\n    \"price\": \"30\",\r\n    \"weight\": 0.5,\r\n    \"supplier\": \"Addidas\",\r\n    \"imageUrl\": \"testtest\",\r\n    \"category\": {\r\n            \"id\": \"a791012a-611c-4525-b752-fe302fc04d8d\",\r\n            \"name\": \"Clothes\",\r\n            \"description\": \"Textiles & Shoes\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/products/new",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"products",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Hoodie\",\r\n    \"description\": \"Fall & Winter\",\r\n    \"price\": \"30\",\r\n    \"weight\": 0.5,\r\n    \"supplier\": \"Addidas\",\r\n    \"imageUrl\": \"testtest\",\r\n    \"category\": {\r\n        \"id\": \"a791012a-611c-4525-b752-fe302fc04d8d\",\r\n        \"name\": \"Clothes\",\r\n        \"description\": \"Textiles & Shoes\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/products/dc629dda-8ae4-4c3d-a493-2bacd02f1e85",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"products",
+						"dc629dda-8ae4-4c3d-a493-2bacd02f1e85"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/products/4404116b-4112-4f6c-ba09-ec061fdefefd",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"products",
+						"4404116b-4112-4f6c-ba09-ec061fdefefd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customer\": {\r\n        \"id\": \"9c57f2be-0ae4-4ffa-91a7-76e58627af6d\",\r\n        \"firstName\": \"David\",\r\n        \"lastName\": \"Ardelean\",\r\n        \"username\": \"davidardelean\",\r\n        \"email\": \"david.ardelean@msg.group\",\r\n        \"password\": \"test\"\r\n    },\r\n    \"country\": \"Romania\",\r\n    \"city\": \"Timisoara\",\r\n    \"county\": \"Timis\",\r\n    \"street\": \"Uzinei\",\r\n    \"orderItems\":[\r\n        {\r\n            \"product\":{\r\n                \"id\": \"041aa5c8-203c-425d-b86e-c46ec469c0c2\",\r\n                \"name\": \"Shoes\",\r\n                \"description\": \"Footwear\",\r\n                \"price\": \"50\",\r\n                \"weight\": 1,\r\n                \"supplier\": \"Nike\",\r\n                \"imageUrl\": \"test\",\r\n                \"category\": {\r\n                    \"id\": \"c84e502a-e848-45ce-a8d1-b53866a465d2\",\r\n                    \"name\": \"Accessories\",\r\n                    \"description\": \"Belts & Sunglasses\"\r\n                }\r\n            },\r\n            \"quantity\":3,\r\n            \"location\":{\r\n                \"id\":\"2ed398b4-d2e4-4e56-a635-247d4f7fe010\",\r\n                \"name\":\"Magazin Arad\",\r\n                \"country\":\"Romania\",\r\n                \"city\":\"Arad\",\r\n                \"street\":\"Bd. Revolutiei\",\r\n                \"county\":\"Arad\"\r\n            }\r\n        },\r\n        {\r\n            \"product\":{\r\n                \"id\": \"b40e4cea-71e8-4af5-9494-d7ffa2d98076\",\r\n                \"name\": \"Bag\",\r\n                \"description\": \"Accessories\",\r\n                \"price\": \"30\",\r\n                \"weight\": 0.5,\r\n                \"supplier\": \"Addidas\",\r\n                \"imageUrl\": \"testtest\",\r\n                \"category\": {\r\n                    \"id\": \"a791012a-611c-4525-b752-fe302fc04d8d\",\r\n                    \"name\": \"Clothes\",\r\n                    \"description\": \"Textiles & Shoes\"\r\n                }\r\n            },\r\n            \"quantity\": 2,\r\n            \"location\":{\r\n                \"id\":\"e918072a-0fdf-44e3-90dd-1be08ac5a670\",\r\n                \"name\":\"Magazin Bucuresti\",\r\n                \"country\":\"Romania\",\r\n                \"city\":\"Bucuresti\",\r\n                \"street\":\"Piata Operei\",\r\n                \"county\":\"Sector 4\"\r\n            }\r\n        }\r\n    ],\r\n    \"location\":{\r\n        \"id\":\"a377c1a1-8b27-4323-9de0-c6f302634d50\",\r\n        \"Name\":\"Test\",\r\n        \"Address.Country\":\" Romania\",\r\n        \"Address.City\":\"Timisoara\",\r\n        \"Address.StreetAddress\":\"Uzinei\",\r\n        \"Address.County\":\"TM\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/orders/new",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"orders",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/orders/479bb048-de4e-4d31-9a77-52f643f1e50d",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"orders",
+						"479bb048-de4e-4d31-9a77-52f643f1e50d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/orders",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"country\": \"Swagger22\",\r\n        \"city\": \"Test\",\r\n        \"county\": \"Timis\",\r\n        \"street\": \"Uzinei\",\r\n        \"customer\": {\r\n            \"id\": \"9c57f2be-0ae4-4ffa-91a7-76e58627af6d\",\r\n            \"firstName\": \"David\",\r\n            \"lastName\": \"Ardelean\",\r\n            \"username\": \"davidardelean\",\r\n            \"email\": \"david.ardelean@msg.group\",\r\n            \"password\": \"test\"\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ":{{Port}}/api/orders/16901ccc-5d7d-47c9-8202-cb5255711c8fx",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"orders",
+						"16901ccc-5d7d-47c9-8202-cb5255711c8fx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ":{{Port}}/api/orders/16901ccc-5d7d-47c9-8202-cb5255711c8f",
+					"port": "{{Port}}",
+					"path": [
+						"api",
+						"orders",
+						"16901ccc-5d7d-47c9-8202-cb5255711c8f"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

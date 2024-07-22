@@ -13,7 +13,7 @@ export class OrderDetailRepository{
         private orderDetailRepository: Repository<OrderDetail>
     ){}
 
-    getAll(orderId: string): SelectQueryBuilder<OrderDetail>{
+    async getAll(orderId: string): Promise<SelectQueryBuilder<OrderDetail>>{
         const queryBuilder = this.orderDetailRepository.createQueryBuilder("order_detail")
         .leftJoinAndSelect("order_detail.order", "order")
         .where("order.id = :orderId", { orderId })
@@ -22,18 +22,18 @@ export class OrderDetailRepository{
     }
 
     async getById(id: UUID): Promise<OrderDetail>{
-        return await this.orderDetailRepository.findOneBy({id});
+        return this.orderDetailRepository.findOneBy({id});
     }
 
     async add(orderDetails:OrderDetail[]) : Promise<OrderDetail[]>{
-        return await this.orderDetailRepository.save(orderDetails);
+        return this.orderDetailRepository.save(orderDetails);
     }
 
     async remove(id:UUID){
-        return await this.orderDetailRepository.delete(id);
+        return this.orderDetailRepository.delete(id);
     }
 
     async removeAll(ids: string[]){
-        return await this.orderDetailRepository.delete(ids);
+        return this.orderDetailRepository.delete(ids);
     }
 }
