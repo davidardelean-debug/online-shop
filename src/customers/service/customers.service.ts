@@ -19,6 +19,16 @@ export class CustomerService {
     }
   }
 
+  async getByUsername(username: string): Promise<Customer> {
+    try {
+      return this.customerRepository.getByUsername(username);
+    } catch (error) {
+      throw new NotFoundException(
+        'Customer not found for username: ' + username,
+      );
+    }
+  }
+
   async add(customer: Customer): Promise<Customer> {
     try {
       return this.customerRepository.add(customer);

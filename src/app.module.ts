@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import { CustomersModule } from './customers/customers.module';
 import { HealthController } from './health.controller';
 import { OrdersModule } from './orders/orders.module';
@@ -13,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
     ProductsModule,
     CustomersModule,
     SharedModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${(process.env.NODE_ENV as string) || 'dev'}`,
@@ -27,7 +29,6 @@ import { SharedModule } from './shared/shared.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [],
         autoLoadEntities: true,
         synchronize: true,
       }),

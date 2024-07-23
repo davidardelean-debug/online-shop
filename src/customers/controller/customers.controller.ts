@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -8,6 +8,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CustomerDto } from '../dto/customer.dto';
 import { toCustomerDto, toCustomerEntity } from '../mapper/customer.mapper';
 import { CustomerService } from '../service/customers.service';
@@ -16,6 +17,7 @@ import { CustomerService } from '../service/customers.service';
 export class CustomersController {
   constructor(private readonly customerService: CustomerService) {}
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   @ApiOkResponse({
     description: 'Get customer by id',
