@@ -5,6 +5,7 @@ import {
   toCustomerEntity,
 } from 'src/customers/mapper/customer.mapper';
 import { CustomerService } from 'src/customers/service/customers.service';
+import { Public } from '../decorators/public.decorator';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthService } from '../services/auth.service';
 
@@ -15,12 +16,14 @@ export class AuthController {
     private readonly customerService: CustomerService,
   ) {}
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
     return await this.authService.login(req.user);
   }
 
+  @Public()
   @Post('register')
   async register(@Body() createUserDto: CustomerDto): Promise<CustomerDto> {
     const customer = toCustomerEntity(createUserDto);

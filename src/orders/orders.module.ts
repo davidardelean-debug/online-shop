@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from 'src/products/products.module';
 import { OrdersController } from './controller/orders.controller';
@@ -16,6 +17,7 @@ import { OrderService } from './service/order.service';
     OrderRepository,
     OrderDetailService,
     OrderDetailRepository,
+    JwtService,
   ],
   exports: [
     OrderService,

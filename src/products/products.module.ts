@@ -1,6 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as https from 'https';
 import { AuthModule } from 'src/auth/auth.module';
 import { Customer } from 'src/customers/domain/customer.entity';
 import { LocationsController } from './controller/location.controller';
@@ -28,9 +29,14 @@ import { StockService } from './service/stock.service';
       Customer,
     ]),
     AuthModule,
-    HttpModule.register({
-      timeout: 5000,
-      maxRedirects: 5,
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        timeout: 5000,
+        maxRedirects: 5,
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false,
+        }),
+      }),
     }),
   ],
   providers: [
