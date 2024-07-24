@@ -13,7 +13,7 @@ export class StockService {
 
   async get(orderItems: OrderItemDto[]): Promise<Stock[]> {
     try {
-      return this.stockRepository.getMany(orderItems);
+      return await this.stockRepository.getMany(orderItems);
     } catch (error) {
       throw new NotFoundException(
         'Stock not found some of the products and their specified location',
@@ -23,7 +23,7 @@ export class StockService {
 
   async update(updatedStock: Stock[]): Promise<Stock[]> {
     try {
-      return this.stockRepository.add(updatedStock);
+      return await this.stockRepository.add(updatedStock);
     } catch (error) {
       throw new BadRequestException('Invalid input body for stock.');
     }

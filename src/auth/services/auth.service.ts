@@ -14,7 +14,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user = await this.customerService.getByUsername(username);
-    if (user && bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       delete user.password;
 
       return user;
@@ -27,24 +27,28 @@ export class AuthService {
       username: customer.username,
       sub: {
         email: customer.email,
+        role: customer.role,
       },
     };
     return {
-      ...customer,
+      user: { ...customer },
       accessToken: this.jwtService.sign(payload),
-      refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
+      // refreshToken: this.jwtService.sign(payload, {
+      //   expiresIn: '7d',
+      // }),
     };
   }
 
-  async refreshToken(customer: Customer) {
+  async refreshToken(customer: Partial<Customer>) {
     const payload: PayloadDto = {
       username: customer.username,
       sub: {
         email: customer.email,
+        role: customer.role,
       },
     };
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: await this.jwtService.signAsync(payload),
     };
   }
 }

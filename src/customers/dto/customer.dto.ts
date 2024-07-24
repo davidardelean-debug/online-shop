@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator';
+import { CustomerRole } from '../domain/customer-role.entity';
 
 export class CustomerDto {
-  id?: string;
+  id: string;
 
   @IsString()
   @MinLength(3, { message: 'Required minimum length is 3.' })
@@ -26,4 +27,12 @@ export class CustomerDto {
   @IsString()
   @ApiProperty({ type: String, description: 'Password', format: 'password' })
   password: string;
+
+  @IsEnum(CustomerRole)
+  @ApiProperty({
+    type: CustomerRole,
+    description: 'User role',
+    enum: CustomerRole,
+  })
+  role: CustomerRole;
 }

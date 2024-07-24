@@ -6,7 +6,6 @@ import {
 } from 'src/customers/mapper/customer.mapper';
 import { CustomerService } from 'src/customers/service/customers.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
-import { RefreshJwtGuard } from '../guards/refresh-jwt.guard';
 import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
@@ -29,9 +28,9 @@ export class AuthController {
     return toCustomerDto(newCustomer);
   }
 
-  @UseGuards(RefreshJwtGuard)
-  @Post('refresh')
-  async refreshToken(@Request() req) {
-    return this.authService.refreshToken(req);
-  }
+  // @UseGuards(RefreshJwtGuard)
+  // @Post('refresh')
+  // async refreshToken(@Request() req) {
+  //   return this.authService.refreshToken(req);
+  // }
 }

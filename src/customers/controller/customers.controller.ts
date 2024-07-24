@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -13,15 +14,16 @@ import { CustomerDto } from '../dto/customer.dto';
 import { toCustomerDto, toCustomerEntity } from '../mapper/customer.mapper';
 import { CustomerService } from '../service/customers.service';
 
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @UseGuards(JwtGuard)
   @Get(':id')
   @ApiOkResponse({
     description: 'Get customer by id',
-    type: Promise<CustomerDto>,
+    type: CustomerDto,
   })
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials.' })

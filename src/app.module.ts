@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './auth/guards/roles.guard';
 import { CustomersModule } from './customers/customers.module';
 import { HealthController } from './health.controller';
 import { OrdersModule } from './orders/orders.module';
@@ -34,6 +36,12 @@ import { SharedModule } from './shared/shared.module';
       }),
       inject: [ConfigService],
     }),
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
   controllers: [HealthController],
 })

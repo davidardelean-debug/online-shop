@@ -9,7 +9,6 @@ import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt-auth.strategy';
 import { LocalStrategy } from './strategies/local-auth.strategy';
-import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '60s' },
+        signOptions: { expiresIn: '3600s' },
       }),
       inject: [ConfigService],
     }),
@@ -29,9 +28,9 @@ import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
     CustomerRepository,
     LocalStrategy,
     JwtStrategy,
-    RefreshJwtStrategy,
+    // RefreshJwtStrategy,
   ],
-
+  exports: [AuthService, JwtModule],
   controllers: [AuthController],
 })
 export class AuthModule {}

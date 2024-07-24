@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from 'src/auth/auth.module';
+import { Customer } from 'src/customers/domain/customer.entity';
 import { ProductCategoryController } from './controller/product-category.controller';
 import { ProductController } from './controller/product.controller';
 import { Location } from './domain/location.entity';
@@ -15,7 +17,14 @@ import { StockService } from './service/stock.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Location, ProductCategory, Product, Stock]),
+    TypeOrmModule.forFeature([
+      Location,
+      ProductCategory,
+      Product,
+      Stock,
+      Customer,
+    ]),
+    AuthModule,
   ],
   providers: [
     ProductCategoryService,

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDecimal,
-  IsInstance,
+  IsNumber,
   IsPositive,
   IsString,
   IsUrl,
@@ -10,9 +11,7 @@ import {
 import { ProductCategoryDto } from './product-category.dto';
 
 export class ProductDto {
-  @IsString()
-  @ApiProperty({ type: String, description: 'Id' })
-  id: string;
+  id?: string;
 
   @IsString()
   @ApiProperty({ type: String, description: 'Name' })
@@ -29,12 +28,12 @@ export class ProductDto {
   @ApiProperty({ type: Number, description: 'Price' })
   price: number;
 
-  @IsDecimal()
+  @IsNumber()
   @IsPositive()
   @ApiProperty({ type: Number, description: 'Weight' })
   weight: number;
 
-  @IsInstance(ProductCategoryDto)
+  @Type(() => ProductCategoryDto)
   @ApiProperty({ type: ProductCategoryDto, description: 'Category' })
   category: ProductCategoryDto;
 
