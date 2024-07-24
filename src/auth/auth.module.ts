@@ -6,6 +6,7 @@ import { Customer } from 'src/customers/domain/customer.entity';
 import { CustomerRepository } from 'src/customers/repository/customer.repository';
 import { CustomerService } from 'src/customers/service/customers.service';
 import { AuthController } from './controllers/auth.controller';
+import { JwtGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt-auth.strategy';
 import { LocalStrategy } from './strategies/local-auth.strategy';
@@ -30,7 +31,7 @@ import { LocalStrategy } from './strategies/local-auth.strategy';
     JwtStrategy,
     // RefreshJwtStrategy,
   ],
-  exports: [AuthService, JwtModule],
+  exports: [AuthService, JwtModule, JwtGuard],
   controllers: [AuthController],
 })
 export class AuthModule {}

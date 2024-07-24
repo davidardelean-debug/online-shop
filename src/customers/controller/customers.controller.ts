@@ -9,7 +9,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
-import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtGuard } from '../../auth/guards/jwt-auth.guard';
 import { CustomerDto } from '../dto/customer.dto';
 import { toCustomerDto, toCustomerEntity } from '../mapper/customer.mapper';
 import { CustomerService } from '../service/customers.service';
