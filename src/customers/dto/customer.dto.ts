@@ -1,14 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsString,
-  IsStrongPassword,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator';
+import { CustomerRole } from '../domain/customer-role.entity';
 
 export class CustomerDto {
-  @IsString()
-  @ApiProperty({ type: String, description: 'Id' })
   id: string;
 
   @IsString()
@@ -30,7 +24,15 @@ export class CustomerDto {
   @ApiProperty({ type: String, description: 'Email' })
   email: string;
 
-  @IsStrongPassword()
+  @IsString()
   @ApiProperty({ type: String, description: 'Password', format: 'password' })
   password: string;
+
+  @IsEnum(CustomerRole)
+  @ApiProperty({
+    type: CustomerRole,
+    description: 'User role',
+    enum: CustomerRole,
+  })
+  role: CustomerRole;
 }

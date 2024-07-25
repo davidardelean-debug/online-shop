@@ -12,7 +12,7 @@ export class OrderDetailService {
 
   async add(orderDetails: OrderDetail[]): Promise<OrderDetail[]> {
     try {
-      return this.orderDetailRepository.add(orderDetails);
+      return await this.orderDetailRepository.add(orderDetails);
     } catch (error) {
       throw new BadRequestException('Invalid input body for order detail.');
     }
@@ -20,7 +20,7 @@ export class OrderDetailService {
 
   async getAll(orderId: string) {
     try {
-      return this.orderDetailRepository.getAll(orderId);
+      return await this.orderDetailRepository.getAll(orderId);
     } catch (error) {
       throw new NotFoundException(
         'Order details not found for order ID: ' + orderId,
@@ -29,6 +29,6 @@ export class OrderDetailService {
   }
 
   async removeAll(orderIds: string[]) {
-    return this.orderDetailRepository.removeAll(orderIds);
+    return await this.orderDetailRepository.removeAll(orderIds);
   }
 }

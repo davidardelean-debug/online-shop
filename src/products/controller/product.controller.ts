@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -16,15 +18,20 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CustomerRole } from 'src/customers/domain/customer-role.entity';
 import { DeleteResult } from 'typeorm';
 import { ProductDto } from '../dto/product.dto';
 import { toProductDto, toProductEntity } from '../mapper/product.mapper';
 import { ProductService } from '../service/product.service';
 
+@ApiBearerAuth()
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @UseGuards(JwtGuard)
   @Get()
   @ApiOkResponse({ description: 'Get products', type: Promise<ProductDto[]> })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials.' })
@@ -33,6 +40,7 @@ export class ProductController {
     return products.map((p) => toProductDto(p));
   }
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   @ApiOkResponse({
     description: 'Get product by id',
@@ -45,10 +53,11 @@ export class ProductController {
     return toProductDto(product);
   }
 
+  @Roles(CustomerRole.ADMIN)
   @Post()
   @ApiCreatedResponse({
     description: 'New product successfully created',
-    type: Promise<ProductDto>,
+    type: ProductDto,
   })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   @ApiBadRequestResponse({ description: 'Invalid input body for product' })
@@ -59,6 +68,7 @@ export class ProductController {
     return toProductDto(newProduct);
   }
 
+  @Roles(CustomerRole.ADMIN)
   @Put(':id')
   @ApiOkResponse({
     description: 'Product successfully updated.',
@@ -75,6 +85,7 @@ export class ProductController {
     return toProductDto(updatedProduct);
   }
 
+  @Roles(CustomerRole.ADMIN)
   @Delete(':id')
   @ApiOkResponse({
     description: 'Product succesfully deleted',

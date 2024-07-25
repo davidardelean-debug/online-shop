@@ -15,12 +15,12 @@ export class ProductCategoryService {
   ) {}
 
   async getAll(): Promise<ProductCategory[]> {
-    return this.productCategoryRepository.getAll();
+    return await this.productCategoryRepository.getAll();
   }
 
   async add(productCategory: ProductCategory): Promise<ProductCategory> {
     try {
-      return this.productCategoryRepository.add(productCategory);
+      return await this.productCategoryRepository.add(productCategory);
     } catch (error) {
       throw new BadRequestException('Invalid input body for product-category.');
     }
@@ -28,7 +28,7 @@ export class ProductCategoryService {
 
   async remove(id: UUID): Promise<DeleteResult> {
     try {
-      return this.productCategoryRepository.remove(id);
+      return await this.productCategoryRepository.remove(id);
     } catch (error) {
       throw new NotFoundException('Product category not found');
     }

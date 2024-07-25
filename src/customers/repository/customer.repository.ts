@@ -15,6 +15,10 @@ export class CustomerRepository {
     return this.customersRepository.findOneBy({ id });
   }
 
+  async getByUsername(username: string): Promise<Customer> {
+    return this.customersRepository.findOneBy({ username });
+  }
+
   async add(customer: Customer): Promise<Customer> {
     return this.customersRepository.save(customer);
   }

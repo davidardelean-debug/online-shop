@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CustomerRole } from './customer-role.entity';
 
 @Entity()
 export class Customer {
@@ -19,4 +20,7 @@ export class Customer {
 
   @Column({ name: 'EmailAddress' })
   email: string;
+
+  @Column({ name: 'Role' })
+  role: CustomerRole;
 }

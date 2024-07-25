@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -16,12 +18,15 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { CreateOrderDto } from '../dto/create-order.dto';
 import { OrderDto } from '../dto/order.dto';
 import { OrderMapper } from '../mapper/order.mapper';
 import { OrderService } from '../service/order.service';
 
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly orderService: OrderService) {}

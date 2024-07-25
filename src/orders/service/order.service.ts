@@ -23,7 +23,7 @@ export class OrderService {
   ) {}
 
   async getAll(): Promise<Order[]> {
-    return this.orderRepository.getAll();
+    return await this.orderRepository.getAll();
   }
 
   async getById(id: UUID): Promise<Order> {
@@ -86,7 +86,7 @@ export class OrderService {
     const orderDetailsIds = (await queryBuilder.getMany()).map((oD) => oD.id);
     await this.orderDetailService.removeAll(orderDetailsIds);
 
-    return this.orderRepository.remove(id);
+    return await this.orderRepository.remove(id);
   }
 
   private checkStock(orderItems: OrderItemDto[], stock: Stock[]) {
