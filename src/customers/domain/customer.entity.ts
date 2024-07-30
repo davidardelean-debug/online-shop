@@ -4,7 +4,7 @@ import { CustomerRole } from './customer-role.entity';
 @Entity()
 export class Customer {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({ name: 'FirstName' })
   firstName: string;
@@ -16,7 +16,7 @@ export class Customer {
   username: string;
 
   @Column({ name: 'Password' })
-  password: string;
+  password?: string;
 
   @Column({ name: 'EmailAddress' })
   email: string;

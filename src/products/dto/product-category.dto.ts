@@ -2,9 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length, MinLength } from 'class-validator';
 
 export class ProductCategoryDto {
-  @IsString()
   @ApiProperty({ type: String, description: 'Id' })
-  id: string;
+  id?: string;
 
   @IsString()
   @MinLength(5, { message: 'Required minimum length is 5.' })
@@ -12,8 +11,8 @@ export class ProductCategoryDto {
   name: string;
 
   @IsString()
-  @Length(5, 30, {
-    message: 'Description length should be between 5 and 30 characters.',
+  @Length(5, 100, {
+    message: 'Description length should be between 5 and 100 characters.',
   })
   @ApiProperty({ type: String, description: 'Description' })
   description: string;

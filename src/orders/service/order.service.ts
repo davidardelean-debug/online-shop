@@ -36,7 +36,11 @@ export class OrderService {
 
   async add(order: Order, orderItems: OrderItemDto[]): Promise<Order> {
     const stock = await this.stockService.get(orderItems);
+
+    if (stock.length === 0)
+      throw new ForbiddenException('Missing stock for some of the products.');
     const { notInStock, updatedStock } = this.checkStock(orderItems, stock);
+
     if (notInStock.length > 0)
       throw new ForbiddenException(
         'Some of the quantities for the products exceed the current stock.',
@@ -101,7 +105,10 @@ export class OrderService {
         orderItem.quantity > stock[matchingIndex].quantity
       ) {
         notInStock.push({ orderItem, matchingStock });
-      }
+      } else if (matchingIndex === -1)
+        throw new Error(
+          'Stock not found for product: ' + orderItem.product.name,
+        );
       const difference = matchingStock.quantity - orderItem.quantity;
       stock[matchingIndex].quantity = difference;
     }

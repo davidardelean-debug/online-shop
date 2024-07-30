@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -19,7 +18,6 @@ import {
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CustomerRole } from 'src/customers/domain/customer-role.entity';
 import { DeleteResult } from 'typeorm';
 import { ProductDto } from '../dto/product.dto';
@@ -31,7 +29,6 @@ import { ProductService } from '../service/product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @UseGuards(JwtGuard)
   @Get()
   @ApiOkResponse({ description: 'Get products', type: Promise<ProductDto[]> })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials.' })
@@ -40,7 +37,6 @@ export class ProductController {
     return products.map((p) => toProductDto(p));
   }
 
-  @UseGuards(JwtGuard)
   @Get(':id')
   @ApiOkResponse({
     description: 'Get product by id',

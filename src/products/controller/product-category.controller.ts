@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -18,7 +17,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
-import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { ProductCategory } from '../domain/product-category.entity';
 import { ProductCategoryDto } from '../dto/product-category.dto';
@@ -29,7 +27,6 @@ import {
 import { ProductCategoryService } from '../service/product-category.service';
 
 @ApiBearerAuth()
-@UseGuards(JwtGuard)
 @Controller('product-category')
 export class ProductCategoryController {
   constructor(

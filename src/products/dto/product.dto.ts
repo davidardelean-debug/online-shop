@@ -1,13 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsDecimal,
-  IsNumber,
-  IsPositive,
-  IsString,
-  IsUrl,
-  Length,
-} from 'class-validator';
+import { IsNumber, IsPositive, IsString, IsUrl, Length } from 'class-validator';
 import { ProductCategoryDto } from './product-category.dto';
 
 export class ProductDto {
@@ -18,13 +11,13 @@ export class ProductDto {
   name: string;
 
   @IsString()
-  @Length(5, 30, {
-    message: 'Description length should be between 5 and 30 characters.',
+  @Length(5, 100, {
+    message: 'Description length should be between 5 and 100 characters.',
   })
   @ApiProperty({ type: String, description: 'description' })
   description: string;
 
-  @IsDecimal()
+  @IsNumber()
   @ApiProperty({ type: Number, description: 'Price' })
   price: number;
 

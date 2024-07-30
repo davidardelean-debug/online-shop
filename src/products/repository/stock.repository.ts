@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderItemDto } from 'src/orders/dto/order-item-dto';
 import { Repository } from 'typeorm';
+import { Product } from '../domain/product.entity';
 import { Stock } from '../domain/stock.entity';
 
 @Injectable()
@@ -31,5 +32,9 @@ export class StockRepository {
 
   async add(stock: Stock[]): Promise<Stock[]> {
     return this.stockRepository.save(stock);
+  }
+
+  async remove(product: Product) {
+    return this.stockRepository.delete({ product });
   }
 }

@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { OrderItemDto } from 'src/orders/dto/order-item-dto';
+import { Product } from '../domain/product.entity';
 import { Stock } from '../domain/stock.entity';
 import { StockRepository } from '../repository/stock.repository';
 
@@ -27,5 +28,9 @@ export class StockService {
     } catch (error) {
       throw new BadRequestException('Invalid input body for stock.');
     }
+  }
+
+  async removeByProduct(product: Product) {
+    return this.stockRepository.remove(product);
   }
 }
