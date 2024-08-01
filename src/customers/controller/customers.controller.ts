@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -9,13 +9,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UUID } from 'crypto';
-import { JwtGuard } from '../../auth/guards/jwt-auth.guard';
 import { CustomerDto } from '../dto/customer.dto';
 import { toCustomerDto, toCustomerEntity } from '../mapper/customer.mapper';
 import { CustomerService } from '../service/customers.service';
 
 @ApiBearerAuth()
-@UseGuards(JwtGuard)
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customerService: CustomerService) {}
